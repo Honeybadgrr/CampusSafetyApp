@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Campus Safety App</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <header class="hero">
+    <div class="container">
+      <span class="brand">Campus Safety</span>
+      <h1>Find campus safety resources</h1>
+      <p>Browse common services and see where to look for help on campus.</p>
+    </div>
+  </header>
+  <main class="container">
+    <section aria-labelledby="resources-heading">
+      <h2 id="resources-heading">Resource directory</h2>
+      <p class="note">Prototype. Confirm availability and contact details with your campus.</p>
+      <div id="search-controls" hidden>
+        <label for="resource-search">Search resources</label>
+        <input id="resource-search" type="search" placeholder="Try escort or reporting">
+        <p id="search-status" role="status"></p>
+      </div>
+      <ul id="resources" class="cards">
+        <li>
+          <h3>Campus safety office</h3>
+          <p>Check your school’s campus safety website for office hours, contact details, and non-emergency assistance.</p>
+        </li>
+        <li>
+          <h3>Safety escort</h3>
+          <p>Check if your school offers a walking escort or a late-night shuttle and how to request one.</p>
+        </li>
+        <li>
+          <h3>Incident reporting</h3>
+          <p>Find your school’s official reporting channels and learn how it handles reports.</p>
+        </li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
