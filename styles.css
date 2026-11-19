@@ -1,7 +1,16 @@
 :root {
+  /* SK COLORS!!! */
+  color-scheme: dark;
+  --background: #101014;
+  --surface: #1b1b24;
+  --control: #292936;
+  --border: #66667c;
+  --text: #f5f3f8;
+  --muted: #c5c1d0;
+  --accent: #ff66cc;
   font-family: system-ui, sans-serif;
-  color: #242321;
-  background: #f8f6f2;
+  color: var(--text);
+  background: var(--background);
   line-height: 1.5;
 }
 
@@ -13,13 +22,12 @@ body { margin: 0; }
 }
 
 header {
-  background: #251e1a;
-  border-top: 5px solid #d94e20;
-  color: #fff;
+  background: var(--surface);
+  border-top: 5px solid var(--accent);
   padding-block: 1.4rem;
 }
 
-header p { margin: 0; color: #f4c5b1; }
+header p { margin: 0; color: var(--accent); }
 h1 { margin: 0; font-size: clamp(1.85rem, 5vw, 2.75rem); }
 h2 { margin: 0 0 0.75rem; font-size: 1.25rem; }
 
@@ -33,15 +41,15 @@ main {
 
 #map {
   height: clamp(22rem, 65vh, 42rem);
-  border: 1px solid #d9cec5;
+  border: 1px solid var(--border);
   border-radius: 0.75rem;
-  background: #e9e6df;
+  background: var(--control);
 }
 
 .panel {
   padding: 1.2rem;
-  background: #fff;
-  border: 1px solid #e0d7ce;
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 0.75rem;
 }
 
@@ -61,7 +69,9 @@ input, textarea {
   width: 100%;
   min-width: 0;
   padding: 0.55rem;
-  border: 1px solid #91857c;
+  color: inherit;
+  background: var(--control);
+  border: 1px solid var(--border);
   border-radius: 0.35rem;
 }
 
@@ -71,26 +81,49 @@ button {
   padding: 0.5rem 0.75rem;
   cursor: pointer;
   color: inherit;
-  background: #fff;
-  border: 1px solid #91857c;
+  background: var(--control);
+  border: 1px solid var(--border);
   border-radius: 0.35rem;
 }
 
 .primary {
   display: block;
   margin: 0.85rem 0;
-  border-color: #a33513;
-  background: #a33513;
-  color: #fff;
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--background);
   font-weight: 700;
 }
 
-:focus-visible { outline: 3px solid #2564a3; outline-offset: 2px; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 #location { margin-top: 0.4rem; }
-.note, #location { color: #5b524c; font-size: 0.92rem; }
+.note, #location { color: var(--muted); font-size: 0.92rem; }
 #report-status { font-weight: 650; }
 .report-description { white-space: pre-wrap; overflow-wrap: anywhere; }
 
+/* Leaflet positions the pin. Rotate the shape to point down. */
+.incident-pin {
+  box-sizing: border-box;
+  background: var(--accent);
+  border: 2px solid var(--background);
+  border-radius: 50% 50% 50% 0;
+  rotate: -45deg;
+}
+
+#map .leaflet-bar a,
+#map .leaflet-control-attribution,
+#map .leaflet-popup-content-wrapper,
+#map .leaflet-popup-tip {
+  background: var(--surface);
+  color: var(--text);
+}
+
+#map .leaflet-bar a:hover { background: var(--control); }
+#map .leaflet-bar a.leaflet-disabled { color: var(--muted); }
+#map .leaflet-control-attribution a,
+#map .leaflet-popup-close-button { color: var(--accent); }
+
+/* Put the form under the map on smaller screens */
 @media (max-width: 46rem) {
   main { grid-template-columns: minmax(0, 1fr); }
   #map { height: 22rem; }
