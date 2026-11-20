@@ -22,23 +22,23 @@
   <main class="container">
     <section aria-labelledby="map-heading">
       <h2 id="map-heading">Campus map</h2>
-      <div id="map" role="region" aria-labelledby="map-heading"></div>
-    </section>
-    <section class="panel" aria-labelledby="report-heading">
-      <h2 id="report-heading">Report an incident</h2>
-      <p>Click the map to drop a pin. Drag it to adjust the location.</p>
-      <form id="report-form">
-        <button id="center-pin" type="button">Place pin at map center</button>
-        <p id="location" role="status">No location selected</p>
-        <label for="occurred-at">Date and time of occurrence (local time)</label>
-        <input id="occurred-at" type="datetime-local" required>
-        <label for="description">Description</label>
-        <textarea id="description" rows="4" maxlength="2000" required></textarea>
-        <button class="primary" type="submit">Save report</button>
-      </form>
-      <p class="note">Reports stay in this browser and aren't sent to campus safety.</p>
+      <p id="map-instructions">Right-click the map to drop a pin, or focus the map and press Shift+F10 to place it at the center. Drag the pin to adjust its location.</p>
+      <div id="map" role="region" aria-labelledby="map-heading" aria-describedby="map-instructions"></div>
       <p id="report-status" role="status"></p>
     </section>
   </main>
+  <template id="report-template">
+    <form id="report-form" aria-labelledby="report-heading">
+      <h3 id="report-heading">Report an incident</h3>
+      <p id="location" role="status"></p>
+      <label for="occurred-at">Date and time of occurrence (local time)</label>
+      <input id="occurred-at" type="datetime-local" required>
+      <label for="description">Description</label>
+      <textarea id="description" rows="4" maxlength="2000" required></textarea>
+      <button class="primary" type="submit">Save report</button>
+      <p class="note">Reports stay in this browser and aren't sent to campus safety.</p>
+      <p id="save-status" role="status"></p>
+    </form>
+  </template>
 </body>
 </html>

@@ -31,13 +31,9 @@ header p { margin: 0; color: var(--accent); }
 h1 { margin: 0; font-size: clamp(1.85rem, 5vw, 2.75rem); }
 h2 { margin: 0 0 0.75rem; font-size: 1.25rem; }
 
-main {
-  display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(17rem, 1fr);
-  gap: 1.4rem;
-  align-items: start;
-  padding-block: 1.5rem;
-}
+main { padding-block: 1.5rem; }
+
+#map-instructions { color: var(--muted); }
 
 #map {
   height: clamp(22rem, 65vh, 42rem);
@@ -46,15 +42,10 @@ main {
   background: var(--control);
 }
 
-.panel {
-  padding: 1.2rem;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 0.75rem;
-}
-
-.panel p { margin: 0 0 0.85rem; }
-.panel p:last-child { margin-bottom: 0; }
+#report-heading { margin: 0 0 0.5rem; font-size: 1rem; }
+#map .report-popup .leaflet-popup-content { margin: 1rem 1.35rem; }
+#map .report-popup p { margin: 0.5rem 0; }
+#map #save-status:empty { margin: 0; }
 
 label {
   display: block;
@@ -96,9 +87,8 @@ button {
 }
 
 :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
-#location { margin-top: 0.4rem; }
 .note, #location { color: var(--muted); font-size: 0.92rem; }
-#report-status { font-weight: 650; }
+#report-status, #save-status { font-weight: 650; }
 .report-description { white-space: pre-wrap; overflow-wrap: anywhere; }
 
 /* Leaflet positions the pin. Rotate the shape to point down. */
@@ -123,8 +113,6 @@ button {
 #map .leaflet-control-attribution a,
 #map .leaflet-popup-close-button { color: var(--accent); }
 
-/* Put the form under the map on smaller screens */
 @media (max-width: 46rem) {
-  main { grid-template-columns: minmax(0, 1fr); }
   #map { height: 22rem; }
 }

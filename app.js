@@ -1,9 +1,5 @@
 const storageKey = "campus-safety-reports";
-const form = document.querySelector("#report-form");
-const locationStatus = document.querySelector("#location");
 const reportStatus = document.querySelector("#report-status");
-const descriptionInput = document.querySelector("#description");
-const timeInput = document.querySelector("#occurred-at");
 
 /** Loads the reports saved by this browser. */
 function loadReports() {
@@ -17,7 +13,6 @@ function loadReports() {
 /** Sets up the campus map and report form. */
 function initializeMap() {
   if (!window.L) {
-    for (const control of form.elements) control.disabled = true;
     reportStatus.textContent = "The map could not load. Check your connection and reload.";
     return;
   }
@@ -29,6 +24,12 @@ function initializeMap() {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   }).addTo(map);
 
+  const form = document.querySelector("#report-template").content.firstElementChild.cloneNode(true);
+  const locationStatus = form.querySelector("#location");
+  const descriptionInput = form.querySelector("#description");
+  const timeInput = form.querySelector("#occurred-at");
+  const saveStatus = form.querySelector("#save-status");
+
   // Only the pin for the current report can move
   let draftPin;
 
@@ -37,7 +38,7 @@ function initializeMap() {
     locationStatus.textContent = `Selected location: ${lat.toFixed(5)}, ${lng.toFixed(5)}`;
   }
 
-  /** Moves the current pin or adds one if this is the first click. */
+  /** Moves the current pin or adds one if there is no draft. */
   function placePin(latLng) {
     if (draftPin) {
       draftPin.setLatLng(latLng);
@@ -52,9 +53,12 @@ function initializeMap() {
         autoPan: true,
         zIndexOffset: 1000,
         alt: "Incident location",
-      }).addTo(map).on("dragend", showLocation);
+      }).addTo(map)
+        .bindPopup(form, { className: "report-popup", minWidth: 210, maxWidth: 280 })
+        .on("dragend", showLocation);
     }
     showLocation();
+    draftPin.openPopup();
   }
 
   /** Adds a saved report to the map with its own popup. */
@@ -85,8 +89,13 @@ function initializeMap() {
     reportStatus.textContent = "Saved reports could not be loaded.";
   }
 
-  map.on("click", (event) => placePin(event.latlng));
-  document.querySelector("#center-pin").addEventListener("click", () => placePin(map.getCenter()));
+  map.on("contextmenu", (event) => placePin(event.latlng));
+  map.getContainer().addEventListener("keydown", (event) => {
+    if (event.target !== map.getContainer() || !event.shiftKey || event.key !== "F10") return;
+    event.preventDefault();
+    placePin(map.getCenter());
+    timeInput.focus();
+  });
 
   descriptionInput.addEventListener("input", () => descriptionInput.setCustomValidity(""));
   form.addEventListener("submit", (event) => {
@@ -98,10 +107,7 @@ function initializeMap() {
       descriptionInput.reportValidity();
       return;
     }
-    if (!draftPin) {
-      reportStatus.textContent = "Choose an incident location on the map.";
-      return;
-    }
+    if (!draftPin) return;
 
     // Read the pin after dragging so we save where it ended up
     const { lat, lng } = draftPin.getLatLng().wrap();
@@ -111,7 +117,7 @@ function initializeMap() {
       reports.push(report);
       localStorage.setItem(storageKey, JSON.stringify(reports));
     } catch {
-      reportStatus.textContent = "The report could not be saved in this browser.";
+      saveStatus.textContent = "The report could not be saved in this browser.";
       return;
     }
 
@@ -119,7 +125,7 @@ function initializeMap() {
     draftPin.remove();
     draftPin = undefined;
     form.reset();
-    locationStatus.textContent = "No location selected";
+    saveStatus.textContent = "";
     reportStatus.textContent = "Report saved.";
     showReport(report).openPopup();
   });
