@@ -73,6 +73,7 @@ function initializeMap() {
     popup.append(time, description);
 
     return L.circleMarker([report.lat, report.lng], {
+      bubblingMouseEvents: false,
       radius: 8,
       color: "#101014",
       weight: 2,
@@ -89,7 +90,7 @@ function initializeMap() {
     reportStatus.textContent = "Saved reports could not be loaded.";
   }
 
-  map.on("contextmenu", (event) => placePin(event.latlng));
+  map.on("click", (event) => placePin(event.latlng));
   map.getContainer().addEventListener("keydown", (event) => {
     if (event.target !== map.getContainer() || !event.shiftKey || event.key !== "F10") return;
     event.preventDefault();
