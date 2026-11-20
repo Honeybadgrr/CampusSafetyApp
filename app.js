@@ -75,9 +75,9 @@ function initializeMap() {
     return L.circleMarker([report.lat, report.lng], {
       bubblingMouseEvents: false,
       radius: 8,
-      color: "#101014",
+      color: "#000000",
       weight: 2,
-      fillColor: "#ff66cc",
+      fillColor: "#d73f09",
       fillOpacity: 1,
     }).addTo(map).bindPopup(popup);
   }

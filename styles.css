@@ -1,13 +1,13 @@
 :root {
-  /* SK COLORS!!! */
+  /* Oregon State University's primary brand palette */
   color-scheme: dark;
-  --background: #101014;
-  --surface: #1b1b24;
-  --control: #292936;
-  --border: #66667c;
-  --text: #f5f3f8;
-  --muted: #c5c1d0;
-  --accent: #ff66cc;
+  --background: #000000;
+  --surface: #171717;
+  --control: #282828;
+  --border: #777777;
+  --text: #ffffff;
+  --muted: #c7c7c7;
+  --accent: #d73f09;
   font-family: system-ui, sans-serif;
   color: var(--text);
   background: var(--background);
@@ -27,7 +27,7 @@ header {
   padding-block: 1.4rem;
 }
 
-header p { margin: 0; color: var(--accent); }
+header p { margin: 0; color: var(--muted); }
 h1 { margin: 0; font-size: clamp(1.85rem, 5vw, 2.75rem); }
 h2 { margin: 0 0 0.75rem; font-size: 1.25rem; }
 
@@ -111,7 +111,7 @@ button {
 #map .leaflet-bar a:hover { background: var(--control); }
 #map .leaflet-bar a.leaflet-disabled { color: var(--muted); }
 #map .leaflet-control-attribution a,
-#map .leaflet-popup-close-button { color: var(--accent); }
+#map .leaflet-popup-close-button { color: var(--text); }
 
 @media (max-width: 46rem) {
   #map { height: 22rem; }
