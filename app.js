@@ -90,12 +90,27 @@ function initializeMap() {
     reportStatus.textContent = "Saved reports could not be loaded.";
   }
 
-  map.on("click", (event) => placePin(event.latlng));
-  map.getContainer().addEventListener("keydown", (event) => {
-    if (event.target !== map.getContainer() || !event.shiftKey || event.key !== "F10") return;
+  const mapContainer = map.getContainer();
+  let mousePosition;
+  mapContainer.addEventListener("pointermove", (event) => {
+    if (event.pointerType === "mouse") {
+      mousePosition = { clientX: event.clientX, clientY: event.clientY };
+    }
+  });
+  mapContainer.addEventListener("pointerleave", () => {
+    mousePosition = undefined;
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.defaultPrevented || event.repeat || event.isComposing ||
+        event.ctrlKey || event.metaKey || event.altKey || event.key.toLowerCase() !== "p") return;
+    if (!mousePosition || event.target?.closest?.("input, textarea, select, [contenteditable]")) return;
+
+    const hovered = document.elementFromPoint(mousePosition.clientX, mousePosition.clientY);
+    if (!mapContainer.contains(hovered) || hovered.closest(".leaflet-popup, .leaflet-control")) return;
+
     event.preventDefault();
-    placePin(map.getCenter());
-    timeInput.focus();
+    placePin(map.mouseEventToLatLng(mousePosition));
   });
 
   descriptionInput.addEventListener("input", () => descriptionInput.setCustomValidity(""));
